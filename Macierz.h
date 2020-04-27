@@ -26,11 +26,11 @@ class Macierz {
     for (int i = 0; i < ile_wierszy; ++i){
       wiersze[i] = dane + i*dlugosc_wiersza;
     }
-  }  
+  }
 
  public:
   void setSize(int n){
-    if(n > 1){
+    if(n > 0){
       ile_wierszy = n;
       dlugosc_wiersza = n + 1;
     }
@@ -71,6 +71,12 @@ class Macierz {
         cout << setw(8) << setprecision(4) << fixed << wiersze[i][j];
       }
       cout << "  |" << setw(8) << setprecision(4) << wiersze[i][dlugosc_wiersza - 1] << endl;
+    }
+  }
+
+  void pokaz(std::vector<char>& varNames) const {
+    for (int i = 0; i < ile_wierszy; ++i) {
+      std::cout << varNames[i] << " = " << wiersze[i][dlugosc_wiersza - 1] << std::endl;
     }
   }
 
