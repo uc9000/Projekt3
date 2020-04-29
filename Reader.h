@@ -120,7 +120,7 @@ class Reader{
         if(line.at(i) == '='){
           line.at(i) = ' ';
         }
-        if(lineCount == 2 && !(isdigit(line.at(i)) || line.at(i) == '.' || line.at(i) == '-' || line.at(i) == '+' || isspace(line.at(i)))){
+        if(!(isdigit(line.at(i)) || line.at(i) == '.' || line.at(i) == '-' || line.at(i) == '+' || isspace(line.at(i)))){          
           varNames.push_back(line.at(i));
           line.erase(line.begin() + i);
           i--;
@@ -163,18 +163,30 @@ class Reader{
     }
   }
 
-  int dajInt(){
-      int liczba;
-      while(true){
-          std::cin >> liczba;
-          if(std::cin.good()){
-              return liczba;
-          }
-          std::cin.clear();
-          std::cin.ignore(256, '\n');          
-          std::cout << "Podaj liczbe calkowita! " << std::endl;
-      }
-  }
+long int dajInt() {
+    using namespace std;
+    bool isGood = false;
+    const int sizeLimit = 5;
+    string str;
+    while (!isGood) {
+        getline(cin, str);
+        //cout<< "podano: " << str << endl;
+        if ((int)str.size() > sizeLimit) {
+            cerr << "Liczba jest za dluga. Podaj liczbe calkowita: " << endl;
+            continue;
+        }
+        for (int i = 0; i < (int)str.size(); i++) {
+            if (!(isdigit(str[i]) || str[i] == '-')) {
+                cerr << "Podaj liczbe calkowita: \n";
+                isGood = false;
+                break;
+            }
+            isGood = true;
+        }        
+    }
+    cin.sync();
+    return stoi(str);
+}
 
     void menu(){ 
         using namespace std;
@@ -190,7 +202,7 @@ class Reader{
                 cout << "1) Wczytaj macierz z pliku" << endl
                 << "2) Wczytaj rownanie z pliku" << endl
                 << "3) Zakoncz" << endl;
-                wybor = dajInt();
+                wybor = (int)dajInt();
                 break;
 
                 case 1:
